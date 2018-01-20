@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="wrap">
+    <form action="" class="validate-js" method="POST">
+      <label for="name">
+        <span>Name</span>
+        <input type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)">
+      </label>
+      <label for="e-mail">
+        <span>E-mail</span>
+        <input type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email|required" />
+      </label>
+      <label for="phone">
+        <span>Phone</span>
+        <input type="text" id="phone" name="phone" placeholder="Phone" />
+      </label>
+      <label for="city">
+        <span>City</span>
+        <input type="text" id="city" name="city" placeholder="City" />
+      </label>
+      <label for="password">
+        <span>Password</span>
+        <input type="password" id="password" name="password" placeholder="password" />
+      </label>
+      <label for="more-password">
+        <span>More password</span>
+        <input type="password" id="more-password" name="more-password" placeholder="more-password" />
+      </label>
+      <input type="submit" value="finish him" class="btn" />
+    </form>
+  </div>
+  <script src="validator.js"></script>
+  <script>
+    new Validate('.validate-js', {
+        lang: 'en',
+        onError(errors) {
+
+          for (let error of errors) {
+            error.el.classList.add('is-error');
+          }
+        },
+        onSuccess(e) {
+        }
+      })
+  </script>
+  <style>
+    *,
+*:before,
+*:afrer {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+body {
+  font-size: 16px;
+  font-family: Segoe UI;
+}
+.wrap {
+  width: 800px;
+  margin: 0 auto;
+}
+label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+}
+input {
+  outline: none;
+}
+input[type=text],
+input[type=password],
+input[type=phone],
+input[type=email] {
+  padding: 10px;
+  width: 80%;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  font-family: Segoe UI;
+  -webkit-transition: border .7s, -webkit-box-shadow .7s;
+  transition: border .7s, -webkit-box-shadow .7s;
+  transition: border .7s, box-shadow .7s;
+  transition: border .7s, box-shadow .7s, -webkit-box-shadow .7s;
+  -webkit-transition-timing-function: steps(5, end);
+          transition-timing-function: steps(5, end);
+}
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=phone]:focus,
+input[type=email]:focus {
+  border: 1px solid #9b9bff;
+  -webkit-box-shadow: 0 0 3px #9b9bff;
+          box-shadow: 0 0 3px #9b9bff;
+}
+input[type=submit] {
+  border: 1px solid #bebebe;
+  background: #000;
+  color: #fff;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0 0 1px #000;
+          box-shadow: 0 0 1px #000;
+  cursor: pointer;
+  padding: 10px 30px;
+  margin-top: 20px;
+  -webkit-transition: background .4s, color .4s, border .4s;
+  transition: background .4s, color .4s, border .4s;
+  -webkit-transition-timing-function: steps(5, end);
+          transition-timing-function: steps(5, end);
+}
+input[type=submit]:hover {
+  background: #fff;
+  color: #000;
+  border: 1px solid #bebebe;
+}
+input.is-error {
+  border: 1px solid #f00;
+}
+  </style>
+</body>
+</html>
