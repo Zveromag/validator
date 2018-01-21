@@ -1,7 +1,7 @@
 var webpack = require("webpack");
 module.exports = {
   entry: {
-    validator: "./src/validator.js"
+    validator: "./src/validate.js"
   },
   output: {
     path: __dirname + "/dist/",
