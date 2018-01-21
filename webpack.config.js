@@ -15,15 +15,14 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [
-              "env"
-            ]
+            presets: ["env"],
+            plugins: ["transform-object-rest-spread"]
           }
         }
       }
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({})
+    new webpack.optimize.UglifyJsPlugin()
   ]
 }
