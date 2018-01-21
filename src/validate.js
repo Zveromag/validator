@@ -29,11 +29,10 @@ export default class Validate {
     for (let i = 0, inputsLen = this.inputs.length; i < inputsLen; i++) {
       const el = this.inputs[i];
       const data = el.dataset.valid;
-      let errors = '';
+      let errors = [];
       const tmp = {
         el: el,
-        lang: this.options.lang,
-        error: errors
+        lang: this.options.lang
       };
 
       if (!data) continue;
@@ -60,11 +59,11 @@ export default class Validate {
           let state = Validator[method](tmp);
 
           if (state !== undefined && state !== true) {
-            errors += `${state}<br>`;
+            errors.push(state);
           }
         }
       }
-      if (errors !== '') {
+      if (errors.length > 0) {
         invalidFields.push({ el: el, errors: errors });
       }
     }
