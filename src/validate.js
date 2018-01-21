@@ -28,7 +28,9 @@ export default class Validate {
     const invalidFields = [];
     for (let i = 0, inputsLen = this.inputs.length; i < inputsLen; i++) {
       const el = this.inputs[i];
-      const data = el.dataset.valid;
+      // const data = el.dataset.valid;
+      const data = el.getAttribute('data-valid');
+
       let errors = [];
       const tmp = {
         el: el,
@@ -82,6 +84,6 @@ export default class Validate {
   }
 }
 
-if (typeof document !== 'undefined') {
+// if (typeof document !== 'undefined') {
   window.Validate = Validate;
-}
+// }

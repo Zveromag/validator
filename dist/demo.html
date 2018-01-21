@@ -40,14 +40,15 @@
   <script>
     new Validate('.validate-js', {
         lang: 'en',
-        onError(data) {
+        onError: function(errors) {
 
-          for (let error of data) {
-            error.el.classList.add('is-error');
-          }
-          console.log(data);
+          errors.forEach(function(error) {
+            error.el.className = 'is-error';
+          });
+          console.log(errors);
         },
-        onSuccess(e) {
+        onSuccess: function(e) {
+          alert('success');
         }
       })
   </script>
