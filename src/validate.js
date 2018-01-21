@@ -84,6 +84,6 @@ export default class Validate {
   }
 }
 
-// if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined') {
   window.Validate = Validate;
-// }
+}
