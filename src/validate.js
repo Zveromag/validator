@@ -51,7 +51,7 @@ export default class Validate {
       let errors = [];
       const tmp = {
         el: el,
-        lang: this.i18n
+        i18n: this.i18n
       };
 
       if (!data) continue;
