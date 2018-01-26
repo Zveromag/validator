@@ -15,7 +15,7 @@
       </label>
       <label for="e-mail">
         <span>E-mail</span>
-        <input type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email|required" />
+        <input type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="required|email" />
       </label>
       <label for="phone">
         <span>Phone</span>
@@ -35,20 +35,46 @@
       </label>
       <input type="submit" value="finish him" class="btn" />
     </form>
+
+    <form action="" class="validate-js" method="POST">
+      <label for="name">
+        <span>Name</span>
+        <input type="text" id="name" name="name" placeholder="Name" data-valid="maxLen(3)">
+      </label>
+      <label for="e-mail">
+        <span>E-mail</span>
+        <input type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="required" />
+      </label>
+      <input type="submit" value="finish him" class="btn" />
+    </form>
   </div>
   <script src="validator.js"></script>
   <script>
-    new Validate('.validate-js', {
-        lang: 'en',
-        onError(errors) {
 
-          for (let error of errors) {
-            error.el.classList.add('is-error');
-          }
-        },
-        onSuccess(e) {
-        }
-      })
+    Validate.i18n = {
+      required: 'Данное поле обязательно для заполнения',
+      minLen: 'Минимально допустимое количество символов равно %s%',
+      maxLen: 'Максимально допустимое количество символов равно %s%',
+      email: 'Поле e-mail имеет неверный формат',
+      phone: 'Телефонный номер имеет неверный формат',
+      number: 'Введенные данные должны быть числом',
+      equalTo: 'Введенные данные не совпадают'
+    }
+
+    Validate.run('.validate-js', {
+      lang: 'en',
+      onError: function (errors) {
+
+        errors.forEach(function (error) {
+          error.el.className = 'is-error';
+        });
+        console.log(errors);
+      },
+      onSuccess: function (e) {
+        alert('success');
+      }
+    });
+
   </script>
   <style>
     *,

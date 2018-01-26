@@ -1,7 +1,7 @@
 var webpack = require("webpack");
 module.exports = {
   entry: {
-    validator: "./src/validator.js"
+    validator: "./src/validate.js"
   },
   output: {
     path: __dirname + "/dist/",
@@ -15,15 +15,14 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [
-              "env"
-            ]
+            presets: ["env"],
+            plugins: ["transform-object-rest-spread"]
           }
         }
       }
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({})
+    new webpack.optimize.UglifyJsPlugin()
   ]
 }
