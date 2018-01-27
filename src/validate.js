@@ -81,6 +81,8 @@ export default class Validate {
           let state = Validator[method](tmp, this.form);
 
           if (state !== undefined && state !== true) {
+            const dataMsg = el.getAttribute('data-valid-msg');
+            state = (!dataMsg) ? state : dataMsg;
             errors.push(state);
           }
         }
