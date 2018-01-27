@@ -1,5 +1,4 @@
-// import Messages from './messages';
-
+/* Validator methods */
 export default {
   required(obj) {
     return obj.el.value.trim() !== '' || obj.i18n.required;
@@ -16,10 +15,12 @@ export default {
   phone(obj) {
     return /^\d[\d\(\)\ -]{4,14}\d$/.test(obj.el.value) || obj.i18n.phone;
   },
-  equalTo(obj) {
-    var equalVal = form.querySelector('[name=' + obj.el.param + ']').value;
+  equalTo(obj, form) {
+    const equalVal = form.querySelector('[name=' + obj.param + ']');
+    if (!equalVal) return;
 
-    return equalVal === obj.el.value || obj.i18n.equalTo;
+    const val = equalVal.value.trim();
+    return val === obj.el.value || obj.i18n.equalTo;
   },
   number(obj) {
     return /^(\d+|\.?\d+)$/.test(obj.el.value) || obj.i18n.number;

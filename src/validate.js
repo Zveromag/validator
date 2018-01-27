@@ -13,12 +13,12 @@ const MESSAGES = {
 const VERSION = 0.1;
 
 const DEFAULTS = {
-  lang: 'ru',
+  online: true,
   onSuccess: function () { },
   onError: function () { }
 };
 
-const RULES = new RegExp(/^(minLen|maxLen|phone|required|password|email)\((\w{1,20})\)/i);
+const RULES = new RegExp(/^(minLen|maxLen|phone|required|equalTo|password|email)\((\w{1,20})\)/i);
 
 export default class Validate {
   constructor(selector, options) {
@@ -45,6 +45,7 @@ export default class Validate {
     const invalidFields = [];
     for (let i = 0, inputsLen = this.inputs.length; i < inputsLen; i++) {
       const el = this.inputs[i];
+      const val = el.value.trim();
       // const data = el.dataset.valid;
       const data = el.getAttribute('data-valid');
 
@@ -73,9 +74,11 @@ export default class Validate {
           method = rules[j];
         }
 
+        if (val === '' && method !== 'required' && method !== 'equalTo') continue;
+
         if (Validator.hasOwnProperty(method)) {
 
-          let state = Validator[method](tmp);
+          let state = Validator[method](tmp, this.form);
 
           if (state !== undefined && state !== true) {
             errors.push(state);
@@ -89,6 +92,8 @@ export default class Validate {
     return invalidFields;
   }
   valid(e) {
+    e.preventDefault();
+
     const errors = this.check();
 
     if (errors.length === 0) return this.options.onSuccess(e);
