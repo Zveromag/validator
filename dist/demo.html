@@ -136,6 +136,21 @@
         <span>equalTo</span>
         <input type="text" id="equal" name="wordcheck" placeholder="equalTo Name" data-valid="equalTo(word)">
       </label>
+      <label for="apply">
+        <span>checkbox</span>
+        <input type="checkbox" id="apply" name="apply" data-valid="required">
+      </label>
+      <input type="radio" name="feedback" id="name" data-valid="required">
+      <input type="radio" name="feedback" id="email" data-valid="required">
+      <input type="radio" name="feedback" id="phone" data-valid="required">
+
+      <select id="customDropdown1" multiple data-valid="required">
+        <option value="">Select grocery item</option>
+        <option value="first">Green Chilies</option>
+        <option value="second">Raisins</option>
+        <option value="third">Panko bread crumbs</option>
+        <option value="fourth">Assistance</option>
+      </select>
       <input type="submit" value="finish him" class="btn" />
     </form>
   </div>

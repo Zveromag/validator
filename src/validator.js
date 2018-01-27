@@ -1,7 +1,29 @@
 /* Validator methods */
 export default {
-  required(obj) {
-    return obj.el.value.trim() !== '' || obj.i18n.required;
+  required(obj, form) {
+
+    let isCheck = true;
+
+    switch (obj.el.type) {
+      case 'checkbox':
+        isCheck = obj.el.checked;
+        break;
+
+      case 'radio':
+        const radioBtns = form.querySelectorAll(`[type="radio"][name="${obj.el.name}"]:checked`);
+        isCheck = radioBtns.length === 1;
+        break;
+
+      case 'select':
+      case 'select-one':
+      case 'select-multiple':
+        isCheck = obj.el.value !== '';
+        break;
+
+      default:  isCheck = obj.el.value.trim() !== '';
+    }
+
+    return isCheck || obj.i18n.required;
   },
   minLen(obj) {
     return obj.el.value.length >= obj.param || obj.i18n.minLen.replace('%s%', obj.param);
