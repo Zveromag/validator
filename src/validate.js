@@ -33,8 +33,10 @@ export default class Validate {
     };
 
     this.form = selector;
-    this.inputs = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled)'));
-    this.eventValid = this.valid.bind(this);
+    this.inputs = [];
+    // this.eventValid = this.valid.bind(this);
+    this.eventSubmit = this.submit.bind(this);
+    this.eventOnline = this.online.bind(this);
 
     this.init();
   }
@@ -42,6 +44,7 @@ export default class Validate {
     return VERSION;
   }
   check() {
+
     const invalidFields = [];
     for (let i = 0, inputsLen = this.inputs.length; i < inputsLen; i++) {
       const el = this.inputs[i];
@@ -94,8 +97,6 @@ export default class Validate {
     return invalidFields;
   }
   valid(e) {
-    e.preventDefault();
-
     const errors = this.check();
 
     if (errors.length === 0) return this.options.onSuccess(e);
@@ -103,8 +104,25 @@ export default class Validate {
     e.preventDefault();
     return this.options.onError(errors);
   }
+  online(e) {
+
+    const target = e.target.closest('[data-valid]:not(:disabled)');
+    if (!target) return;
+
+    this.inputs = [target];
+    this.valid(e);
+  }
+  submit(e) {
+    this.inputs = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled)'));
+    this.valid(e);
+  }
   init() {
-    this.form.addEventListener('submit', this.eventValid);
+
+    this.form.addEventListener('submit', this.eventSubmit);
+
+    if (this.options.online) {
+      this.form.addEventListener('change', this.eventOnline);
+    }
 
   }
 
