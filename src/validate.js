@@ -13,9 +13,10 @@ const MESSAGES = {
 const VERSION = 0.1;
 
 const DEFAULTS = {
-  online: true,
+  live: true,
   onSuccess: function () { },
-  onError: function () { }
+  onError: function () { },
+  onLive: function () { }
 };
 
 const RULES = new RegExp(/^(minLen|maxLen|phone|required|equalTo|password|email)\((\w{1,20})\)/i);
@@ -35,8 +36,8 @@ export default class Validate {
     this.form = selector;
     this.inputs = [];
     // this.eventValid = this.valid.bind(this);
-    this.eventSubmit = this.submit.bind(this);
-    this.eventOnline = this.online.bind(this);
+    this.eventSubmit = this.validateForm.bind(this);
+    this.eventLive   = this.validateInput.bind(this);
 
     this.init();
   }
@@ -58,7 +59,7 @@ export default class Validate {
         i18n: this.i18n
       };
 
-      if (!data) continue;
+      // if (!data) continue;
 
       let rules = data.split('|');
       let rulesLen = rules.length;
@@ -96,7 +97,23 @@ export default class Validate {
     }
     return invalidFields;
   }
-  valid(e) {
+  validateInput(e) {
+
+    const target = e.target.closest('[data-valid]:not(:disabled)');
+    if (!target) return;
+
+    this.inputs = [target];
+
+    let errors = this.check();
+    if (errors.length === 0) {
+      errors = { el: target };
+    }
+
+    return this.options.onLive(errors);
+  }
+  validateForm(e) {
+    this.inputs = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled)'));
+
     const errors = this.check();
 
     if (errors.length === 0) return this.options.onSuccess(e);
@@ -104,24 +121,12 @@ export default class Validate {
     e.preventDefault();
     return this.options.onError(errors);
   }
-  online(e) {
-
-    const target = e.target.closest('[data-valid]:not(:disabled)');
-    if (!target) return;
-
-    this.inputs = [target];
-    this.valid(e);
-  }
-  submit(e) {
-    this.inputs = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled)'));
-    this.valid(e);
-  }
   init() {
 
     this.form.addEventListener('submit', this.eventSubmit);
 
-    if (this.options.online) {
-      this.form.addEventListener('change', this.eventOnline);
+    if (this.options.live) {
+      this.form.addEventListener('change', this.eventLive);
     }
 
   }
