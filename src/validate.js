@@ -13,13 +13,13 @@ const MESSAGES = {
 const VERSION = 0.1;
 
 const DEFAULTS = {
-  live: true,
+  change   : true,
   onSuccess: function () { },
-  onError: function () { },
-  onLive: function () { }
+  onError  : function () { },
+  onChange : function () { }
 };
 
-const RULES = new RegExp(/^(minLen|maxLen|phone|required|equalTo|password|email)\((\w{1,20})\)/i);
+const RULES = new RegExp(/^(minLen|maxLen|phone|required|equalTo|email)\((\w{1,20})\)/i);
 
 export default class Validate {
   constructor(selector, options) {
@@ -34,99 +34,106 @@ export default class Validate {
     };
 
     this.form = selector;
-    this.inputs = [];
-    // this.eventValid = this.valid.bind(this);
-    this.eventSubmit = this.validateForm.bind(this);
-    this.eventLive   = this.validateInput.bind(this);
 
-    this.init();
+    this.formSubmit  = this.validateForm.bind(this);
+    this.inputChange = this.validateInput.bind(this);
+
+    this.events();
   }
+
   static get version() {
     return VERSION;
   }
-  check() {
 
-    const invalidFields = [];
-    for (let i = 0, inputsLen = this.inputs.length; i < inputsLen; i++) {
-      const el = this.inputs[i];
-      const val = el.value.trim();
-      // const data = el.dataset.valid;
-      const data = el.getAttribute('data-valid');
+  check(el) {
 
-      let errors = [];
-      const tmp = {
-        el: el,
-        i18n: this.i18n
-      };
+    const val  = el.value.trim();
+    const data = el.getAttribute('data-valid');
 
-      // if (!data) continue;
+    const errors = [];
+    const tmp = {
+      el: el,
+      i18n: this.i18n
+    };
 
-      let rules = data.split('|');
-      let rulesLen = rules.length;
+    let rules = data.split('|');
+    let rulesLen = rules.length;
 
-      for (let j = 0; j < rulesLen; j++) {
-        let rule = rules[j].match(RULES);
-        let method;
+    for (let j = 0; j < rulesLen; j++) {
+      let rule = rules[j].match(RULES);
+      let method;
 
-        if (rule) {
-          method = rule[1];
-          if (rule[2] !== undefined) {
-            tmp.param = rule[2];
-          }
-        }
-        else {
-          method = rules[j];
-        }
-
-        if (val === '' && method !== 'required' && method !== 'equalTo') continue;
-
-        if (Validator.hasOwnProperty(method)) {
-
-          let state = Validator[method](tmp, this.form);
-
-          if (state !== undefined && state !== true) {
-            const dataMsg = el.getAttribute(`data-valid-msg-${method}`);
-            state = (!dataMsg) ? state : dataMsg;
-            errors.push(state);
-          }
+      if (rule) {
+        method = rule[1];
+        if (rule[2] !== undefined) {
+          tmp.param = rule[2];
         }
       }
-      if (errors.length > 0) {
-        invalidFields.push({ el: el, errors: errors });
+      else {
+        method = rules[j];
+      }
+
+      if (val === '' && method !== 'required' && method !== 'equalTo') continue;
+
+      if (Validator.hasOwnProperty(method)) {
+
+        let state = Validator[method](tmp, this.form);
+
+        if (state !== undefined && state !== true) {
+          const dataMsg = el.getAttribute(`data-valid-msg-${method}`);
+          state = (!dataMsg) ? state : dataMsg;
+          errors.push(state);
+        }
       }
     }
-    return invalidFields;
+    return errors;
   }
+
   validateInput(e) {
 
     const target = e.target.closest('[data-valid]:not(:disabled)');
     if (!target) return;
 
-    this.inputs = [target];
+    let tmp = {
+      el: target
+    };
 
-    let errors = this.check();
-    if (errors.length === 0) {
-      errors = { el: target };
+    const err = this.check(target);
+    if (err.length > 0) {
+      tmp.errors = err;
     }
 
-    return this.options.onLive(errors);
+    return this.options.onChange(tmp);
   }
-  validateForm(e) {
-    this.inputs = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled)'));
 
-    const errors = this.check();
+  validateForm(e) {
+    e.preventDefault()
+    const errors = [];
+    const fields = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled):not([hidden])'));
+
+    for (let i = 0, inputsLen = fields.length; i < inputsLen; i++) {
+      const err = this.check(fields[i]);
+
+      if (err.length === 0) continue;
+
+      errors.push({
+        el: fields[i],
+        errors: err
+      });
+    }
 
     if (errors.length === 0) return this.options.onSuccess(e);
 
     e.preventDefault();
     return this.options.onError(errors);
   }
-  init() {
 
-    this.form.addEventListener('submit', this.eventSubmit);
+  events() {
 
-    if (this.options.live) {
-      this.form.addEventListener('change', this.eventLive);
+    this.form.addEventListener('submit', this.formSubmit);
+
+    if (this.options.change) {
+      this.form.addEventListener('change', this.inputChange);
     }
 
   }

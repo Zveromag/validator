@@ -143,7 +143,6 @@
     }
 
     Validate.run('.validate-js', {
-      lang: 'en',
       onError: function (errors) {
 
         errors.forEach(function (error) {
@@ -151,10 +150,15 @@
         });
         console.log(errors);
       },
-      onLive: function(field) {
-        console.log(field);
+      onChange: function(field) {
+        if (!field.errors) {
+          field.el.closest('.form-group').classList.remove('has-error');
+        } else {
+          field.el.closest('.form-group').classList.add('has-error');
+        }
       },
       onSuccess: function (e) {
+        e.preventDefault();
         alert('success');
       }
     });
