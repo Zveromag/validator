@@ -1,8 +1,29 @@
-// import Messages from './messages';
-
+/* Validator methods */
 export default {
-  required(obj) {
-    return obj.el.value.trim() !== '' || obj.i18n.required;
+  required(obj, form) {
+
+    let isCheck = true;
+
+    switch (obj.el.type) {
+      case 'checkbox':
+        isCheck = obj.el.checked;
+        break;
+
+      case 'radio':
+        const radioBtns = form.querySelectorAll(`[type="radio"][name="${obj.el.name}"]:checked`);
+        isCheck = radioBtns.length === 1;
+        break;
+
+      case 'select':
+      case 'select-one':
+      case 'select-multiple':
+        isCheck = obj.el.value !== '';
+        break;
+
+      default:  isCheck = obj.el.value.trim() !== '';
+    }
+
+    return isCheck || obj.i18n.required;
   },
   minLen(obj) {
     return obj.el.value.length >= obj.param || obj.i18n.minLen.replace('%s%', obj.param);
@@ -16,10 +37,12 @@ export default {
   phone(obj) {
     return /^\d[\d\(\)\ -]{4,14}\d$/.test(obj.el.value) || obj.i18n.phone;
   },
-  equalTo(obj) {
-    var equalVal = form.querySelector('[name=' + obj.el.param + ']').value;
+  equalTo(obj, form) {
+    const equalVal = form.querySelector('[name=' + obj.param + ']');
+    if (!equalVal) return;
 
-    return equalVal === obj.el.value || obj.i18n.equalTo;
+    const val = equalVal.value.trim();
+    return val === obj.el.value || obj.i18n.equalTo;
   },
   number(obj) {
     return /^(\d+|\.?\d+)$/.test(obj.el.value) || obj.i18n.number;

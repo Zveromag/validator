@@ -13,12 +13,13 @@ const MESSAGES = {
 const VERSION = 0.1;
 
 const DEFAULTS = {
-  lang: 'ru',
+  change   : true,
   onSuccess: function () { },
-  onError: function () { }
+  onError  : function () { },
+  onChange : function () { }
 };
 
-const RULES = new RegExp(/^(minLen|maxLen|phone|required|password|email)\((\w{1,20})\)/i);
+const RULES = new RegExp(/^(minLen|maxLen|phone|required|equalTo|email)\((\w{1,20})\)/i);
 
 export default class Validate {
   constructor(selector, options) {
@@ -33,71 +34,107 @@ export default class Validate {
     };
 
     this.form = selector;
-    this.inputs = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled)'));
-    this.eventValid = this.valid.bind(this);
 
-    this.init();
+    this.formSubmit  = this.validateForm.bind(this);
+    this.inputChange = this.validateInput.bind(this);
+
+    this.events();
   }
+
   static get version() {
     return VERSION;
   }
-  check() {
-    const invalidFields = [];
-    for (let i = 0, inputsLen = this.inputs.length; i < inputsLen; i++) {
-      const el = this.inputs[i];
-      // const data = el.dataset.valid;
-      const data = el.getAttribute('data-valid');
 
-      let errors = [];
-      const tmp = {
-        el: el,
-        i18n: this.i18n
-      };
+  check(el) {
 
-      if (!data) continue;
+    const val  = el.value.trim();
+    const data = el.getAttribute('data-valid');
 
-      let rules = data.split('|');
-      let rulesLen = rules.length;
+    const errors = [];
+    const tmp = {
+      el: el,
+      i18n: this.i18n
+    };
 
-      for (let j = 0; j < rulesLen; j++) {
-        let rule = rules[j].match(RULES);
-        let method;
+    let rules = data.split('|');
+    let rulesLen = rules.length;
 
-        if (rule) {
-          method = rule[1];
-          if (rule[2] !== undefined) {
-            tmp.param = rule[2];
-          }
-        }
-        else {
-          method = rules[j];
-        }
+    for (let j = 0; j < rulesLen; j++) {
+      let rule = rules[j].match(RULES);
+      let method;
 
-        if (Validator.hasOwnProperty(method)) {
-
-          let state = Validator[method](tmp);
-
-          if (state !== undefined && state !== true) {
-            errors.push(state);
-          }
+      if (rule) {
+        method = rule[1];
+        if (rule[2] !== undefined) {
+          tmp.param = rule[2];
         }
       }
-      if (errors.length > 0) {
-        invalidFields.push({ el: el, errors: errors });
+      else {
+        method = rules[j];
+      }
+
+      if (val === '' && method !== 'required' && method !== 'equalTo') continue;
+
+      if (Validator.hasOwnProperty(method)) {
+
+        let state = Validator[method](tmp, this.form);
+
+        if (state !== undefined && state !== true) {
+          const dataMsg = el.getAttribute(`data-valid-msg-${method}`);
+          state = (!dataMsg) ? state : dataMsg;
+          errors.push(state);
+        }
       }
     }
-    return invalidFields;
+    return errors;
   }
-  valid(e) {
-    const errors = this.check();
+
+  validateInput(e) {
+
+    const target = e.target.closest('[data-valid]:not(:disabled)');
+    if (!target) return;
+
+    let tmp = {
+      el: target
+    };
+
+    const err = this.check(target);
+    if (err.length > 0) {
+      tmp.errors = err;
+    }
+
+    return this.options.onChange(tmp);
+  }
+
+  validateForm(e) {
+    e.preventDefault()
+    const errors = [];
+    const fields = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled):not([hidden])'));
+
+    for (let i = 0, inputsLen = fields.length; i < inputsLen; i++) {
+      const err = this.check(fields[i]);
+
+      if (err.length === 0) continue;
+
+      errors.push({
+        el: fields[i],
+        errors: err
+      });
+    }
 
     if (errors.length === 0) return this.options.onSuccess(e);
 
     e.preventDefault();
     return this.options.onError(errors);
   }
-  init() {
-    this.form.addEventListener('submit', this.eventValid);
+
+  events() {
+
+    this.form.addEventListener('submit', this.formSubmit);
+
+    if (this.options.change) {
+      this.form.addEventListener('change', this.inputChange);
+    }
 
   }
 

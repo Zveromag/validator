@@ -1,51 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
   <title>Document</title>
 </head>
+
 <body>
-  <div class="wrap">
-    <form action="" class="validate-js" method="POST">
-      <label for="name">
-        <span>Name</span>
-        <input type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)">
-      </label>
-      <label for="e-mail">
-        <span>E-mail</span>
-        <input type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="required|email" />
-      </label>
-      <label for="phone">
-        <span>Phone</span>
-        <input type="text" id="phone" name="phone" placeholder="Phone" />
-      </label>
-      <label for="city">
-        <span>City</span>
-        <input type="text" id="city" name="city" placeholder="City" />
-      </label>
-      <label for="password">
-        <span>Password</span>
-        <input type="password" id="password" name="password" placeholder="password" />
-      </label>
-      <label for="more-password">
-        <span>More password</span>
-        <input type="password" id="more-password" name="more-password" placeholder="more-password" />
-      </label>
-      <input type="submit" value="finish him" class="btn" />
+  <div class="container" style="max-width: 550px">
+
+    <h2>Form validate</h2>
+
+    <form action="" class="form-horizontal validate-js" method="POST">
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="name">Name</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)" data-valid-msg-minlen="Это поле должно содержать как минимум 2 символа">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="e-mail">E-mail</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="required|email" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="phone">Phone</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="city">City</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="text" id="city" name="city" placeholder="City" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="password">Password</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="password" id="password" name="password" placeholder="password" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="more-password">Repeat password</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" />
+        </div>
+      </div>
+      <!-- <div class="form-group"> -->
+        <button class="btn btn-primary">finish him</button>
+        <button type="reset" class="btn">reset</button>
+      <!-- </div> -->
     </form>
 
-    <form action="" class="validate-js" method="POST">
-      <label for="name">
-        <span>Name</span>
-        <input type="text" id="name" name="name" placeholder="Name" data-valid="maxLen(3)">
-      </label>
-      <label for="e-mail">
-        <span>E-mail</span>
-        <input type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="required" />
-      </label>
-      <input type="submit" value="finish him" class="btn" />
+    <div class="divider"></div>
+
+    <form action="" class="form-horizontal validate-js" method="POST">
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="name">Name</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="text" id="name" name="word" placeholder="Name" data-valid="maxLen(3)">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label" for="equal">equalTo</label>
+        </div>
+        <div class="col-9">
+          <input class="form-input" type="text" id="equal" name="wordcheck" placeholder="equalTo Name" data-valid="equalTo(word)">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-9 col-ml-auto">
+          <label class="form-checkbox" for="apply">
+            <input type="checkbox" id="apply" data-valid="required">
+            <i class="form-icon"></i> Remember me
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          Gender
+        </div>
+        <div class="col-9">
+          <label class="form-radio">
+            <input type="radio" name="gender" data-valid="required">
+            <i class="form-icon"></i> Male
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="gender" data-valid="required">
+            <i class="form-icon"></i> Female
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-3">
+          <label class="form-label">Source</label>
+        </div>
+        <div class="col-9">
+          <select class="form-select" multiple="" data-valid="required">
+            <option value="slack">Slack</option>
+            <option value="skype">Skype</option>
+            <option value="hipchat">Hipchat</option>
+          </select>
+        </div>
+      </div>
+      <!-- <div class="form-group"> -->
+        <button class="btn btn-primary">finish him</button>
+        <button type="reset" class="btn">reset</button>
+      <!-- </div> -->
     </form>
   </div>
   <script src="validator.js"></script>
@@ -62,99 +143,27 @@
     }
 
     Validate.run('.validate-js', {
-      lang: 'en',
       onError: function (errors) {
 
         errors.forEach(function (error) {
-          error.el.className = 'is-error';
+          error.el.closest('.form-group').classList.add('has-error');
         });
         console.log(errors);
       },
+      onChange: function(field) {
+        if (!field.errors) {
+          field.el.closest('.form-group').classList.remove('has-error');
+        } else {
+          field.el.closest('.form-group').classList.add('has-error');
+        }
+      },
       onSuccess: function (e) {
+        e.preventDefault();
         alert('success');
       }
     });
 
   </script>
-  <style>
-    *,
-*:before,
-*:afrer {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-body {
-  font-size: 16px;
-  font-family: Segoe UI;
-}
-.wrap {
-  width: 800px;
-  margin: 0 auto;
-}
-label {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-bottom: 10px;
-}
-input {
-  outline: none;
-}
-input[type=text],
-input[type=password],
-input[type=phone],
-input[type=email] {
-  padding: 10px;
-  width: 80%;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  font-family: Segoe UI;
-  -webkit-transition: border .7s, -webkit-box-shadow .7s;
-  transition: border .7s, -webkit-box-shadow .7s;
-  transition: border .7s, box-shadow .7s;
-  transition: border .7s, box-shadow .7s, -webkit-box-shadow .7s;
-  -webkit-transition-timing-function: steps(5, end);
-          transition-timing-function: steps(5, end);
-}
-input[type=text]:focus,
-input[type=password]:focus,
-input[type=phone]:focus,
-input[type=email]:focus {
-  border: 1px solid #9b9bff;
-  -webkit-box-shadow: 0 0 3px #9b9bff;
-          box-shadow: 0 0 3px #9b9bff;
-}
-input[type=submit] {
-  border: 1px solid #bebebe;
-  background: #000;
-  color: #fff;
-  text-transform: uppercase;
-  -webkit-box-shadow: 0 0 1px #000;
-          box-shadow: 0 0 1px #000;
-  cursor: pointer;
-  padding: 10px 30px;
-  margin-top: 20px;
-  -webkit-transition: background .4s, color .4s, border .4s;
-  transition: background .4s, color .4s, border .4s;
-  -webkit-transition-timing-function: steps(5, end);
-          transition-timing-function: steps(5, end);
-}
-input[type=submit]:hover {
-  background: #fff;
-  color: #000;
-  border: 1px solid #bebebe;
-}
-input.is-error {
-  border: 1px solid #f00;
-}
-  </style>
 </body>
+
 </html>
