@@ -1,6 +1,6 @@
 /* Validator methods */
 export default {
-  required(obj, form) {
+  required(obj, validate) {
 
     let isCheck = true;
 
@@ -10,7 +10,7 @@ export default {
         break;
 
       case 'radio':
-        const radioBtns = form.querySelectorAll(`[type="radio"][name="${obj.el.name}"]:checked`);
+        const radioBtns = validate.form.querySelectorAll(`[type="radio"][name="${obj.el.name}"]:checked`);
         isCheck = radioBtns.length === 1;
         break;
 
@@ -34,17 +34,22 @@ export default {
   email(obj) {
     return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(obj.el.value) || obj.i18n.email;
   },
-  phone(obj) {
-    return /^\d[\d\(\)\ -]{4,14}\d$/.test(obj.el.value) || obj.i18n.phone;
-  },
-  equalTo(obj, form) {
-    const equalVal = form.querySelector('[name=' + obj.param + ']');
+  equalTo(obj, validate) {
+    const equalVal = validate.form.querySelector('[name=' + obj.param + ']');
     if (!equalVal) return;
 
     const val = equalVal.value.trim();
     return val === obj.el.value || obj.i18n.equalTo;
   },
+  url(obj) {
+    return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(obj.el.value) || obj.i18n.url;
+  },
   number(obj) {
     return /^(\d+|\.?\d+)$/.test(obj.el.value) || obj.i18n.number;
   },
+  regex(obj, validate) {
+    const method = validate.options.validators.regex[obj.param];
+
+    return new RegExp(method.pattern).test(obj.el.value) || method.error;
+  }
 };

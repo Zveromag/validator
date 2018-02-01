@@ -7,7 +7,8 @@ const MESSAGES = {
   email: 'The e-mail field has the wrong format',
   phone: 'The phone number is not in the correct format',
   number: 'The entered data must be a number',
-  equalTo: 'The entered data does not match'
+  equalTo: 'The entered data does not match',
+  url: 'It is not a valid url'
 }
 
 const VERSION = 0.1;
@@ -19,7 +20,7 @@ const DEFAULTS = {
   onChange : function () { }
 };
 
-const RULES = new RegExp(/^(minLen|maxLen|phone|required|equalTo|email)\((\w{1,20})\)/i);
+const RULES = new RegExp(/^(minLen|maxLen|required|equalTo|email|regex|url)\((\w{1,20})\)/i);
 
 export default class Validate {
   constructor(selector, options) {
@@ -77,10 +78,11 @@ export default class Validate {
 
       if (Validator.hasOwnProperty(method)) {
 
-        let state = Validator[method](tmp, this.form);
+        let state = Validator[method](tmp, this);
 
         if (state !== undefined && state !== true) {
           const dataMsg = el.getAttribute(`data-valid-msg-${method}`);
+
           state = (!dataMsg) ? state : dataMsg;
           errors.push(state);
         }
@@ -107,7 +109,6 @@ export default class Validate {
   }
 
   validateForm(e) {
-    e.preventDefault()
     const errors = [];
     const fields = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled):not([hidden])'));
 
@@ -136,6 +137,40 @@ export default class Validate {
       this.form.addEventListener('change', this.inputChange);
     }
 
+  }
+
+  static destroy(elements) {
+    if (elements instanceof Node) {
+      elements = [elements];
+    }
+
+    if (elements instanceof NodeList) {
+      elements = [].slice.call(elements);
+    }
+
+    if (typeof elements === 'string') {
+      elements = [].slice.call(document.querySelectorAll(elements));
+    }
+
+    if (!(elements instanceof Array)) {
+      return;
+    }
+
+    elements.forEach((element) => {
+      if ('Validate' in element) {
+        const self = element.Validate;
+
+        self.form.removeEventListener('submit', self.formSubmit);
+
+        if (self.options.change) {
+          self.form.removeEventListener('change', self.inputChange);
+        }
+
+        self.form.Validate = null;
+        delete self.form.Validate;
+        self.form = null;
+      }
+    });
   }
 
   static run(elements, settings) {
