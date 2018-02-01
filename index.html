@@ -33,10 +33,10 @@
       </div>
       <div class="form-group">
         <div class="col-3">
-          <label class="form-label" for="phone" >Phone</label>
+          <label class="form-label" for="phone">Phone</label>
         </div>
         <div class="col-9">
-          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="regex(phone)"/>
+          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="regex(phone)" />
         </div>
       </div>
       <div class="form-group">
@@ -52,7 +52,8 @@
           <label class="form-label" for="url">url</label>
         </div>
         <div class="col-9">
-          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url" data-valid-msg-url="Не верный тип url"/>
+          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url" data-valid-msg-url="Не верный тип url"
+          />
         </div>
       </div>
       <div class="form-group">
@@ -72,8 +73,8 @@
         </div>
       </div>
       <!-- <div class="form-group"> -->
-        <button class="btn btn-primary">finish him</button>
-        <button type="reset" class="btn">reset</button>
+      <button class="btn btn-primary">finish him</button>
+      <button type="reset" class="btn">reset</button>
       <!-- </div> -->
     </form>
 
@@ -132,12 +133,12 @@
         </div>
       </div>
       <!-- <div class="form-group"> -->
-        <button class="btn btn-primary">finish him</button>
-        <button type="reset" class="btn">reset</button>
+      <button class="btn btn-primary">finish him</button>
+      <button type="reset" class="btn">reset</button>
       <!-- </div> -->
     </form>
   </div>
-  <script src="validator.js"></script>
+  <script src="dist/validator.js"></script>
   <script>
 
     Validate.i18n = {
@@ -158,7 +159,7 @@
         });
         console.log(errors);
       },
-      onChange: function(field) {
+      onChange: function (field) {
         console.log(field);
         if (!field.errors) {
           field.el.closest('.form-group').classList.remove('has-error');
