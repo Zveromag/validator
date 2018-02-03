@@ -1,4 +1,6 @@
+import './polyfill';
 import Validator from './validator';
+
 
 const MESSAGES = {
   required: 'This field is required',
