@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css">
   <title>Document</title>
 </head>
 
@@ -46,10 +47,11 @@
 
       <h2>Options</h2>
       <p>Options default values</p>
-      <pre class="code"><code class="language-javascript">change: true,
+      <pre class="code"><code class="language-javascript">liveChange: true, // realtime validating fields
 onError(errors) { //do something with errors object }
 onSuccess(event) { event.preventDefault(); //do something }
 onChange(field) { // field object }
+onReset(event) { // reset form and removing errors}
 validators: {
   regex: {
     isHuman: {
@@ -227,6 +229,19 @@ c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />
         e.preventDefault();
         console.log(e.target.elements);
         alert('success');
+      },
+      onReset: function (e) {
+        var form = e.target;
+        var fieldsWrap = [].slice.call(form.querySelectorAll('.has-error'));
+        //var hints = [].slice.call(form.querySelectorAll('.form-input-hint'));
+
+        fieldsWrap.forEach(function (item) {
+          item.classList.remove('has-error');
+
+          var hint = item.querySelector('.form-input-hint');
+          if (hint) item.removeChild(hint);
+        });
+
       },
       validators: {
         regex: {
