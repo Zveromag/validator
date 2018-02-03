@@ -16,10 +16,11 @@ const MESSAGES = {
 const VERSION = 0.1;
 
 const DEFAULTS = {
-  change   : true,
-  onSuccess: function () { },
-  onError  : function () { },
-  onChange : function () { }
+  liveChange : true,
+  onSuccess  : function () { },
+  onError    : function () { },
+  onChange   : function () { },
+  onReset    : function () { }
 };
 
 const RULES = new RegExp(/^(minLen|maxLen|required|equalTo|email|regex|url)\((\w{1,20})\)/i);
@@ -39,6 +40,7 @@ export default class Validate {
     this.form = selector;
 
     this.formSubmit  = this.validateForm.bind(this);
+    this.formReset   = this.reset.bind(this);
     this.inputChange = this.validateInput.bind(this);
 
     this.events();
@@ -95,7 +97,7 @@ export default class Validate {
 
   validateInput(e) {
 
-    const target = e.target.closest('[data-valid]:not(:disabled)');
+    const target = e.target.closest('[data-valid]');
     if (!target) return;
 
     let tmp = {
@@ -112,7 +114,7 @@ export default class Validate {
 
   validateForm(e) {
     const errors = [];
-    const fields = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled):not([hidden])'));
+    const fields = Array.prototype.slice.call(this.form.querySelectorAll('[data-valid]:not(:disabled):not([type="hidden"])'));
 
     for (let i = 0, inputsLen = fields.length; i < inputsLen; i++) {
       const err = this.check(fields[i]);
@@ -131,11 +133,16 @@ export default class Validate {
     return this.options.onError(errors);
   }
 
+  reset(e) {
+    this.options.onReset(e);
+  }
+
   events() {
 
     this.form.addEventListener('submit', this.formSubmit);
+    this.form.addEventListener('reset', this.formReset);
 
-    if (this.options.change) {
+    if (this.options.liveChange) {
       this.form.addEventListener('change', this.inputChange);
     }
 
