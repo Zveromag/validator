@@ -6,141 +6,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
 
 <body>
-  <div class="container" style="max-width: 550px">
 
-    <h2>Form validate</h2>
+  <div class="hero">
+    <div class="hero__inner">
+      <h1 class="hero__title">Validate form plugin</h1>
+      <span class="hero__desc">Simple plugin for form validation</span>
+    </div>
+    <a href="" class="github">
+      <svg aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+  </div>
 
-    <form action="" class="form-horizontal validate-js" method="POST">
+  <div class="container">
+
+    <article>
+      <h2>Description</h2>
+      <p>This plugin validate form</p>
+
+      <h2>Initialization</h2>
+      <pre class="code"><code class="language-javascript">Validate.run('.validate-js', options);</code></pre>
+
+      <h2>Markup</h2>
+      <pre class="code"><code class="language-markup">&lt;form action=&quot;&quot; class=&quot;validate-js&quot; method=&quot;POST&quot;&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt; &lt;
+    &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; placeholder=&quot;Name&quot; data-valid=&quot;required|minLen(2)&quot;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;e-mail&quot;&gt;Email&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;e-mail&quot; name=&quot;e-mail&quot; placeholder=&quot;E-mail&quot; data-valid=&quot;required|email&quot;/&gt;
+  &lt;/div&gt;
+  &lt;button&gt;Send&lt;button/&gt;
+&lt;/form&gt;</code></pre>
+
+      <h2>Options</h2>
+      <p>Options default values</p>
+      <pre class="code"><code class="language-javascript">change: true,
+onError(errors) { //do something with errors object }
+onSuccess(event) { event.preventDefault(); //do something }
+onChange(field) { // field object }
+validators: {
+  regex: {
+    isHuman: {
+      pattern: /^human$/i, // check `word` in the field
+      error: 'You must type the word human' // error message
+    }
+  }
+}
+</code></pre>
+      <h2>Simple localization</h2>
+      <p>For example russian messages</p>
+      <pre class="code"><code class="language-javascript">Validate.i18n = {
+  required: 'Данное поле обязательно для заполнения',
+  minLen: 'Минимально допустимое количество символов равно %s%',
+  maxLen: 'Максимально допустимое количество символов равно %s%',
+  email: 'Поле e-mail имеет неверный формат',
+  number: 'Введенные данные должны быть числом',
+  equalTo: 'Введенные данные не совпадают'
+}
+
+Validate.run('.validate-js', options);
+</code></pre>
+    </article>
+
+
+    <h2>Demos</h2>
+
+    <form action="" class="validate-js" method="POST">
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="name">Name</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)" data-valid-msg-minlen="Это поле должно содержать как минимум 2 символа">
-        </div>
+        <label class="form-label" for="name">Name</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)" data-valid-msg-minlen="Это поле должно содержать как минимум 2 символа">
       </div>
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="e-mail">E-mail</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email" />
-        </div>
+        <label class="form-label" for="e-mail">E-mail</label>
+        <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email" />
       </div>
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="phone">Phone</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="regex(phone)" />
-        </div>
+        <label class="form-label" for="phone">Phone</label>
+        <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="required|regex(phone)" />
       </div>
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="city">City</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="text" id="city" name="city" placeholder="City" />
-        </div>
+        <label class="form-label" for="city">City</label>
+        <input class="form-input" type="text" id="city" name="city" placeholder="City" data-valid="maxLen(1)|regex(phone)" />
       </div>
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="url">url</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url" data-valid-msg-url="Не верный тип url"
-          />
-        </div>
+        <label class="form-label" for="url">url</label>
+        <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url" data-valid-msg-url="Не верный тип url"/>
       </div>
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="password">Password</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="password" id="password" name="password" placeholder="password" />
-        </div>
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" type="password" id="password" name="password" placeholder="password" data-valid="required" />
       </div>
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="more-password">Repeat password</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" />
-        </div>
+        <label class="form-label" for="more-password">Repeat password</label>
+        <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" data-valid="equalTo(password)" />
       </div>
-      <!-- <div class="form-group"> -->
-      <button class="btn btn-primary">finish him</button>
-      <button type="reset" class="btn">reset</button>
-      <!-- </div> -->
+      <div class="form-group">
+        <label class="form-label" for="select">Select</label>
+        <select class="form-select" name="" id="select" data-valid="required">
+          <option value="" selected>Select number</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">finish him</button>
+        <button type="reset" class="btn">reset</button>
+      </div>
     </form>
 
     <div class="divider"></div>
 
-    <form action="" class="form-horizontal validate-js" method="POST">
+    <form action="" class="validate-js" method="POST">
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="name">Name</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="text" id="name" name="word" placeholder="Name" data-valid="maxLen(3)">
-        </div>
+        <div>Gender</div>
+        <label class="form-radio">
+          <input type="radio" name="gender" data-valid="required">
+          <i class="form-icon"></i> Male
+        </label>
+        <label class="form-radio">
+          <input type="radio" name="gender" data-valid="required">
+          <i class="form-icon"></i> Female
+        </label>
       </div>
       <div class="form-group">
-        <div class="col-3">
-          <label class="form-label" for="equal">equalTo</label>
-        </div>
-        <div class="col-9">
-          <input class="form-input" type="text" id="equal" name="wordcheck" placeholder="equalTo Name" data-valid="equalTo(word)">
-        </div>
+        <label class="form-label">Source</label>
+        <select class="form-select" multiple="" data-valid="required">
+          <option value="slack">Slack</option>
+          <option value="skype">Skype</option>
+          <option value="hipchat">Hipchat</option>
+        </select>
       </div>
       <div class="form-group">
-        <div class="col-9 col-ml-auto">
-          <label class="form-checkbox" for="apply">
-            <input type="checkbox" id="apply" data-valid="required">
-            <i class="form-icon"></i> Remember me
-          </label>
-        </div>
+        <label class="form-checkbox" for="apply">
+          <input type="checkbox" id="apply" data-valid="required">
+          <i class="form-icon"></i> Apply
+        </label>
       </div>
       <div class="form-group">
-        <div class="col-3">
-          Gender
-        </div>
-        <div class="col-9">
-          <label class="form-radio">
-            <input type="radio" name="gender" data-valid="required">
-            <i class="form-icon"></i> Male
-          </label>
-          <label class="form-radio">
-            <input type="radio" name="gender" data-valid="required">
-            <i class="form-icon"></i> Female
-          </label>
-        </div>
+        <button class="btn btn-primary">finish him</button>
+        <button type="reset" class="btn">reset</button>
       </div>
-      <div class="form-group">
-        <div class="col-3">
-          <label class="form-label">Source</label>
-        </div>
-        <div class="col-9">
-          <select class="form-select" multiple="" data-valid="required">
-            <option value="slack">Slack</option>
-            <option value="skype">Skype</option>
-            <option value="hipchat">Hipchat</option>
-          </select>
-        </div>
-      </div>
-      <!-- <div class="form-group"> -->
-      <button class="btn btn-primary">finish him</button>
-      <button type="reset" class="btn">reset</button>
-      <!-- </div> -->
     </form>
   </div>
-  <script src="dist/validator.js"></script>
+
+  <div class="footer">
+    <div class="text-center">Made with <svg class="icon" width="14" height="14" fill="#fff" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />
+    </svg></div>
+  </div>
+  <script src="validator.js"></script>
   <script>
 
+    function getParentByClass(el, cls) {
+      while ((el = el.parentElement) && !el.classList.contains(cls));
+      return el;
+    }
+
+    //  localization object
     Validate.i18n = {
       required: 'Данное поле обязательно для заполнения',
       minLen: 'Минимально допустимое количество символов равно %s%',
@@ -154,21 +183,49 @@
     Validate.run('.validate-js', {
       onError: function (errors) {
 
-        errors.forEach(function (error) {
-          error.el.closest('.form-group').classList.add('has-error');
-        });
         console.log(errors);
+        //  Show all errors in the form
+        errors.forEach(function (error) {
+          var field = error.el;
+          // var parent = field.closest('.form-group');
+          var parent = getParentByClass(field, 'form-group');
+          var notice = parent.querySelector('.form-input-hint');
+
+          if (notice) {
+            notice.parentNode.removeChild(notice)
+          }
+
+          parent.classList.add('has-error');
+          parent.insertAdjacentHTML('beforeend', '<div class="form-input-hint">' + error.errors.join('<br>') + '</div>')
+
+        });
+
       },
       onChange: function (field) {
-        console.log(field);
+
+        // var parent = field.el.closest('.form-group');
+        var parent = getParentByClass(field.el, 'form-group');
+        var notice = parent.querySelector('.form-input-hint');
+
+        // if notice exist remove him
+        if (notice) {
+          notice.parentNode.removeChild(notice);
+        }
+
         if (!field.errors) {
-          field.el.closest('.form-group').classList.remove('has-error');
+          // if the field is validated, delete the class error from the parent wrapper
+          parent.classList.remove('has-error');
+
         } else {
-          field.el.closest('.form-group').classList.add('has-error');
+          // or added error class and show notice
+          parent.classList.add('has-error');
+          parent.insertAdjacentHTML('beforeend', '<div class="form-input-hint">' + field.errors.join('<br>') + '</div>')
         }
       },
       onSuccess: function (e) {
+        // Send form
         e.preventDefault();
+        console.log(e.target.elements);
         alert('success');
       },
       validators: {
@@ -182,6 +239,7 @@
     });
 
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
 </body>
 
 </html>
