@@ -32,12 +32,13 @@
         <p>This plugin validate form</p>
 
         <h2>Initialization</h2>
-        <pre class="code"><code class="language-javascript">Validate.run('.validate-js', options);</code></pre>
+        <pre class="code"><code class="language-javascript">Validate.run(selectors, options); // selectors - node|nodeList|string</code></pre>
 
         <h2>Markup</h2>
-        <pre class="code"><code class="language-markup">&lt;form action=&quot;&quot; class=&quot;validate-js&quot; method=&quot;POST&quot;&gt;
+        <p>One example of markup</p>
+        <pre class="code"><code class="language-markup">&lt;form action=&quot;&quot; class=&quot;js-validate&quot; method=&quot;POST&quot;&gt;
   &lt;div class=&quot;form-group&quot;&gt;
-    &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt; &lt;
+    &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
     &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; placeholder=&quot;Name&quot; data-valid=&quot;required|minLen(2)&quot;&gt;
   &lt;/div&gt;
   &lt;div class=&quot;form-group&quot;&gt;
@@ -48,21 +49,22 @@
 &lt;/form&gt;</code></pre>
 
         <h2>Options</h2>
-        <p>Options default values</p>
-        <pre class="code"><code class="language-javascript">liveChange: true, // realtime validating fields
-onError(errors) { //do something with errors object }
-onSuccess(event) { event.preventDefault(); //do something }
-onChange(field) { // field object }
-onReset(event) { // reset form and removing errors}
-validators: {
-  regex: {
-    isHuman: {
-      pattern: /^human$/i, // check `word` in the field
-      error: 'You must type the word human' // error message
+        <p>All options with defaults</p>
+        <pre class="code"><code class="language-javascript">{
+  liveChange: true, // realtime validating fields
+  onError(errors) { //do something with errors object }
+  onSuccess(event) { event.preventDefault(); //do something }
+  onChange(field) { // field object }
+  onReset(event) { // reset form and removing errors}
+  validators: {
+    regex: {
+      isHuman: {
+        pattern: /^human$/i, // check `word` in the field
+        error: 'You must type the word human' // error message
+      }
     }
   }
-}
-  </code></pre>
+}</code></pre>
         <h2>Simple localization</h2>
         <p>For example russian messages</p>
         <pre class="code"><code class="language-javascript">Validate.i18n = {
@@ -74,14 +76,15 @@ validators: {
   equalTo: 'Введенные данные не совпадают'
 }
 
-Validate.run('.validate-js', options);
-  </code></pre>
+Validate.run('.js-validate', options);</code></pre>
+      <p>Custom messages using the data-attributes <code>data-valid-msg-{method_name}</code></p>
+      <pre class="code"><code class="language-markup">&lt;input type=&quot;text&quot; data-valid=&quot;required|email&quot; data-valid-msg-email=&quot;Invalid email format&quot;/&gt;</code></pre>
       </article>
 
 
       <h2>Demos</h2>
 
-      <form action="" class="validate-js" method="POST">
+      <form action="" class="js-validate" method="POST">
         <div class="form-group">
           <label class="form-label" for="name">Name</label>
           <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="required|maxLen(10)">
@@ -119,7 +122,7 @@ Validate.run('.validate-js', options);
 
       <div class="divider"></div>
 
-      <form action="" class="validate-js" method="POST">
+      <form action="" class="js-validate" method="POST">
         <div class="form-group">
           <label class="form-label" for="custom"></label>
           <input type="text" class="form-input" placeholder="Type human" data-valid="required|regex(human)">
@@ -182,7 +185,7 @@ Validate.run('.validate-js', options);
       equalTo: 'Введенные данные не совпадают'
     }
 
-    Validate.run('.validate-js', {
+    Validate.run('.js-validate', {
       onError: function (errors) {
 
         console.log(errors);

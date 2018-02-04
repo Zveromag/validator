@@ -2,7 +2,7 @@
 :root {
   --body-bg: #fafafa;
   --hero-height: 50vh;
-  --linear-gradient: linear-gradient(-45deg, #525252, #3d72b4);
+  --linear-gradient: linear-gradient(-45deg, #355C7D, #6C5B7B, #C06C84);
   --hero-clip-path: polygon(50% 0%, 100% 0, 100% 96%, 25% 100%, 0 95%, 0 0);
   --footer-clip-path: polygon(27% 0, 100% 3%, 100% 100%, 51% 100%, 0 100%, 0 4%);
 }
