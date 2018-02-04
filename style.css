@@ -1,11 +1,13 @@
 
 :root {
   --body-bg: #fafafa;
+  --hero-height: 50vh;
   --linear-gradient: linear-gradient(-45deg, #525252, #3d72b4);
   --hero-clip-path: polygon(50% 0%, 100% 0, 100% 96%, 25% 100%, 0 95%, 0 0);
   --footer-clip-path: polygon(27% 0, 100% 3%, 100% 100%, 51% 100%, 0 100%, 0 4%);
 }
 body {
+  padding-top: var(--hero-height);
   background-color: var(--body-bg);
 }
 .container {
@@ -17,14 +19,22 @@ body {
   margin-top: 30px;
   margin-bottom: 30px;
 }
-.hero {
+.wrap {
   position: relative;
+  background-color: var(--body-bg);
+  z-index: 3;
+}
+.hero {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 350px;
-  height: 50vh;
+  /* min-height: 350px; */
+  height: var(--hero-height);
   background-image: var(--linear-gradient);
   clip-path: var(--hero-clip-path);
 }
