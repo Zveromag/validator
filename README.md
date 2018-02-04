@@ -7,36 +7,39 @@ This plugin validate form
 ## Initialization
 
 ````javaScript
-new Validate('.validate-js', options);
+Validate.run(selectors, options);;
 ````
 
-## Demo
-````html
-<form action="" class="validate-js" method="POST">
-  <label for="name">
-    <span>Name</span>
-    <input type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)">
-  </label>
-  <label for="e-mail">
-    <span>E-mail</span>
-    <input type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email|required" />
-  </label>
-  <input type="submit" value="finish him" class="btn" />
-</form>
-````
-[view demo](https://codepen.io/Zveromag/pen/KZbbzO)
+## Live demo
+
+[view demo](https://zveromag.github.io/validator/)
 
 ## Options
 
-Values
+````javaScript
+liveChange: true, // realtime validating fields
+onError(errors) { //do something with errors object }
+onSuccess(event) { event.preventDefault(); //do something }
+onChange(field) { // field object }
+onReset(event) { // reset form and removing errors}
+validators: {
+  regex: {
+    isHuman: {
+      pattern: /^human$/i, // check `word` in the field
+      error: 'You must type the word human' // error message
+    }
+  }
+}
+````
+## Simple localization
 
 ````javaScript
-lang: 'en' // ru, en
-onError(errors) {
-  //do something
-}
-onSuccess(event) {
-  event.preventDefault();
-  //do something
+Validate.i18n = {
+  required: 'Данное поле обязательно для заполнения',
+  minLen: 'Минимально допустимое количество символов равно %s%',
+  maxLen: 'Максимально допустимое количество символов равно %s%',
+  email: 'Поле e-mail имеет неверный формат',
+  number: 'Введенные данные должны быть числом',
+  equalTo: 'Введенные данные не совпадают'
 }
 ````
