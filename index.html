@@ -23,17 +23,19 @@
     </a>
   </div>
 
-  <div class="container">
+  <div class="wrap">
 
-    <article>
-      <h2>Description</h2>
-      <p>This plugin validate form</p>
+    <div class="container">
 
-      <h2>Initialization</h2>
-      <pre class="code"><code class="language-javascript">Validate.run('.validate-js', options);</code></pre>
+      <article>
+        <h2>Description</h2>
+        <p>This plugin validate form</p>
 
-      <h2>Markup</h2>
-      <pre class="code"><code class="language-markup">&lt;form action=&quot;&quot; class=&quot;validate-js&quot; method=&quot;POST&quot;&gt;
+        <h2>Initialization</h2>
+        <pre class="code"><code class="language-javascript">Validate.run('.validate-js', options);</code></pre>
+
+        <h2>Markup</h2>
+        <pre class="code"><code class="language-markup">&lt;form action=&quot;&quot; class=&quot;validate-js&quot; method=&quot;POST&quot;&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt; &lt;
     &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; placeholder=&quot;Name&quot; data-valid=&quot;required|minLen(2)&quot;&gt;
@@ -45,9 +47,9 @@
   &lt;button&gt;Send&lt;button/&gt;
 &lt;/form&gt;</code></pre>
 
-      <h2>Options</h2>
-      <p>Options default values</p>
-      <pre class="code"><code class="language-javascript">liveChange: true, // realtime validating fields
+        <h2>Options</h2>
+        <p>Options default values</p>
+        <pre class="code"><code class="language-javascript">liveChange: true, // realtime validating fields
 onError(errors) { //do something with errors object }
 onSuccess(event) { event.preventDefault(); //do something }
 onChange(field) { // field object }
@@ -60,10 +62,10 @@ validators: {
     }
   }
 }
-</code></pre>
-      <h2>Simple localization</h2>
-      <p>For example russian messages</p>
-      <pre class="code"><code class="language-javascript">Validate.i18n = {
+  </code></pre>
+        <h2>Simple localization</h2>
+        <p>For example russian messages</p>
+        <pre class="code"><code class="language-javascript">Validate.i18n = {
   required: 'Данное поле обязательно для заполнения',
   minLen: 'Минимально допустимое количество символов равно %s%',
   maxLen: 'Максимально допустимое количество символов равно %s%',
@@ -73,96 +75,98 @@ validators: {
 }
 
 Validate.run('.validate-js', options);
-</code></pre>
-    </article>
+  </code></pre>
+      </article>
 
 
-    <h2>Demos</h2>
+      <h2>Demos</h2>
 
-    <form action="" class="validate-js" method="POST">
-      <div class="form-group">
-        <label class="form-label" for="name">Name</label>
-        <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)" data-valid-msg-minlen="Это поле должно содержать как минимум 2 символа">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="e-mail">E-mail</label>
-        <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email" />
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="phone">Phone</label>
-        <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="required|regex(phone)" />
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="city">City</label>
-        <input class="form-input" type="text" id="city" name="city" placeholder="City" data-valid="maxLen(1)|regex(phone)" />
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="url">url</label>
-        <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url" data-valid-msg-url="Не верный тип url"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-input" type="password" id="password" name="password" placeholder="password" data-valid="required" />
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="more-password">Repeat password</label>
-        <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" data-valid="equalTo(password)" />
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="select">Select</label>
-        <select class="form-select" name="" id="select" data-valid="required">
-          <option value="" selected>Select number</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary">finish him</button>
-        <button type="reset" class="btn">reset</button>
-      </div>
-    </form>
+      <form action="" class="validate-js" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="name">Name</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)" data-valid-msg-minlen="Это поле должно содержать как минимум 2 символа">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="e-mail">E-mail</label>
+          <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone</label>
+          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="required|regex(phone)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="city">City</label>
+          <input class="form-input" type="text" id="city" name="city" placeholder="City" data-valid="maxLen(1)|regex(phone)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="url">url</label>
+          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url" data-valid-msg-url="Не верный тип url"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-input" type="password" id="password" name="password" placeholder="password" data-valid="required" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="more-password">Repeat password</label>
+          <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" data-valid="equalTo(password)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="select">Select</label>
+          <select class="form-select" name="" id="select" data-valid="required">
+            <option value="" selected>Select number</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">finish him</button>
+          <button type="reset" class="btn">reset</button>
+        </div>
+      </form>
 
-    <div class="divider"></div>
+      <div class="divider"></div>
 
-    <form action="" class="validate-js" method="POST">
-      <div class="form-group">
-        <div>Gender</div>
-        <label class="form-radio">
-          <input type="radio" name="gender" data-valid="required">
-          <i class="form-icon"></i> Male
-        </label>
-        <label class="form-radio">
-          <input type="radio" name="gender" data-valid="required">
-          <i class="form-icon"></i> Female
-        </label>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Source</label>
-        <select class="form-select" multiple="" data-valid="required">
-          <option value="slack">Slack</option>
-          <option value="skype">Skype</option>
-          <option value="hipchat">Hipchat</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-checkbox" for="apply">
-          <input type="checkbox" id="apply" data-valid="required">
-          <i class="form-icon"></i> Apply
-        </label>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary">finish him</button>
-        <button type="reset" class="btn">reset</button>
-      </div>
-    </form>
+      <form action="" class="validate-js" method="POST">
+        <div class="form-group">
+          <div>Gender</div>
+          <label class="form-radio">
+            <input type="radio" name="gender" data-valid="required">
+            <i class="form-icon"></i> Male
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="gender" data-valid="required">
+            <i class="form-icon"></i> Female
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Source</label>
+          <select class="form-select" multiple="" data-valid="required">
+            <option value="slack">Slack</option>
+            <option value="skype">Skype</option>
+            <option value="hipchat">Hipchat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-checkbox" for="apply">
+            <input type="checkbox" id="apply" data-valid="required">
+            <i class="form-icon"></i> Apply
+          </label>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">finish him</button>
+          <button type="reset" class="btn">reset</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="footer">
+      <div class="text-center">Made with <svg class="icon" width="14" height="14" fill="#fff" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+  c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />
+      </svg></div>
+    </div>
   </div>
 
-  <div class="footer">
-    <div class="text-center">Made with <svg class="icon" width="14" height="14" fill="#fff" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />
-    </svg></div>
-  </div>
   <script src="validator.js"></script>
   <script>
 
