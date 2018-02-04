@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css">
-  <title>Document</title>
+  <title>Validate form</title>
 </head>
 
 <body>
@@ -84,23 +84,15 @@ Validate.run('.validate-js', options);
       <form action="" class="validate-js" method="POST">
         <div class="form-group">
           <label class="form-label" for="name">Name</label>
-          <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="minLen(2)" data-valid-msg-minlen="Это поле должно содержать как минимум 2 символа">
+          <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="required|maxLen(10)">
         </div>
         <div class="form-group">
           <label class="form-label" for="e-mail">E-mail</label>
-          <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="email" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="phone">Phone</label>
-          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="required|regex(phone)" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="city">City</label>
-          <input class="form-input" type="text" id="city" name="city" placeholder="City" data-valid="maxLen(1)|regex(phone)" />
+          <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="required|email" />
         </div>
         <div class="form-group">
           <label class="form-label" for="url">url</label>
-          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url" data-valid-msg-url="Не верный тип url"/>
+          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url"/>
         </div>
         <div class="form-group">
           <label class="form-label" for="password">Password</label>
@@ -128,6 +120,10 @@ Validate.run('.validate-js', options);
       <div class="divider"></div>
 
       <form action="" class="validate-js" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="custom"></label>
+          <input type="text" class="form-input" placeholder="Type human" data-valid="required|regex(human)">
+        </div>
         <div class="form-group">
           <div>Gender</div>
           <label class="form-radio">
@@ -237,7 +233,6 @@ Validate.run('.validate-js', options);
       onReset: function (e) {
         var form = e.target;
         var fieldsWrap = [].slice.call(form.querySelectorAll('.has-error'));
-        //var hints = [].slice.call(form.querySelectorAll('.form-input-hint'));
 
         fieldsWrap.forEach(function (item) {
           item.classList.remove('has-error');
@@ -249,14 +244,33 @@ Validate.run('.validate-js', options);
       },
       validators: {
         regex: {
-          phone: {
-            pattern: /\d/i,
-            error: 'error'
+          human: {
+            pattern: /^human$/i,
+            error: 'Необходимо набрать слово human'
           }
         }
       }
     });
 
+
+// Page effects
+  var hero = document.querySelector('.hero');
+  var heroTitle = hero.querySelector('.hero__inner');
+  function heroFade() {
+    var scrollTop  = window.scrollY || window.pageYOffset;
+    var heroHeight = hero.offsetHeight;
+    var alpha = 1 - (scrollTop / heroHeight);
+    var rotate = Math.round((scrollTop / heroHeight) * 100) % 360;
+
+    if (alpha < 0) alpha = 0;
+
+    heroTitle.style.opacity = alpha;
+    heroTitle.style.transform = 'perspective(700px) rotate3d(1, 0, 0, '+rotate+'deg)';
+  }
+
+  window.addEventListener('scroll', function() {
+    requestAnimationFrame(heroFade);
+  });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
 </body>
