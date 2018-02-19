@@ -33,10 +33,10 @@
       </div>
       <div class="form-group">
         <div class="col-3">
-          <label class="form-label" for="phone" >Phone</label>
+          <label class="form-label" for="phone">Phone</label>
         </div>
         <div class="col-9">
-          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="regex(phone)"/>
+          <input class="form-input" type="text" id="phone" name="phone" placeholder="Phone" data-valid="regex(phone)" />
         </div>
       </div>
       <div class="form-group">
@@ -52,7 +52,8 @@
           <label class="form-label" for="url">url</label>
         </div>
         <div class="col-9">
-          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="required|url" data-valid-msg-url="Не верный тип url"/>
+          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="required|url" data-valid-msg-url="Не верный тип url"
+          />
         </div>
       </div>
       <div class="form-group">
@@ -60,7 +61,7 @@
           <label class="form-label" for="password">Password</label>
         </div>
         <div class="col-9">
-          <input class="form-input" type="password" id="password" name="password" placeholder="password" />
+          <input class="form-input" type="password" id="password" name="password" placeholder="password" data-valid="required" />
         </div>
       </div>
       <div class="form-group">
@@ -68,12 +69,13 @@
           <label class="form-label" for="more-password">Repeat password</label>
         </div>
         <div class="col-9">
-          <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" />
+          <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" data-valid="equalTo(password)"
+          />
         </div>
       </div>
       <!-- <div class="form-group"> -->
-        <button class="btn btn-primary">finish him</button>
-        <button type="reset" class="btn">reset</button>
+      <button class="btn btn-primary">finish him</button>
+      <button type="reset" class="btn">reset</button>
       <!-- </div> -->
     </form>
 
@@ -132,8 +134,8 @@
         </div>
       </div>
       <!-- <div class="form-group"> -->
-        <button class="btn btn-primary">finish him</button>
-        <button type="reset" class="btn">reset</button>
+      <button class="btn btn-primary">finish him</button>
+      <button type="reset" class="btn">reset</button>
       <!-- </div> -->
     </form>
   </div>
@@ -151,27 +153,10 @@
     }
 
     Validate.run('.validate-js', {
-      onError: function (errors) {
-
-        errors.forEach(function (error) {
-          error.el.closest('.form-group').classList.add('has-error');
-        });
-        console.log(errors);
-      },
-      onChange: function(field) {
-        console.log(field);
-        if (!field.errors) {
-          field.el.closest('.form-group').classList.remove('has-error');
-        } else {
-          field.el.closest('.form-group').classList.add('has-error');
-        }
-      },
+      errorHintClass: 'form-input-hint',
       onSuccess: function (e) {
         e.preventDefault();
         alert('success');
-      },
-      onReset: function (e) {
-        console.log(e);
       },
       validators: {
         regex: {
@@ -182,7 +167,6 @@
         }
       }
     });
-
   </script>
 </body>
 
