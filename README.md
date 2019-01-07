@@ -1,7 +1,4 @@
 # Validator
-
-## Description
-
 This plugin validate form
 
 ## Initialization
