@@ -4,22 +4,23 @@
   "description": "Simple form validation",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack -w"
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Zveromag/validator.git"
   },
-  "keywords": [],
+  "keywords": ["form validator", "form validate", "validator", "validate", "validator plugin"],
   "authors": [
-    {
-      "name": "Ivan Tarakanov",
-      "email": "zveerko@gmail.com"
-    },
     {
       "name": "Ivan Kuzmichov",
       "url": "https://github.com/k-ivan"
+    },
+    {
+      "name": "Ivan Tarakanov",
+      "email": "zveerko@gmail.com"
     }
   ],
   "license": "MIT",
@@ -28,10 +29,14 @@
   },
   "homepage": "https://github.com/Zveromag/validator#readme",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "webpack": "^3.10.0"
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-object-assign": "^7.2.0",
+    "@babel/preset-env": "^7.5.5",
+    "gh-pages": "^2.1.1",
+    "rollup": "^1.19.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-browsersync": "^1.0.0",
+    "rollup-plugin-progress": "^1.1.1",
+    "rollup-plugin-terser": "^5.1.1"
   }
 }
