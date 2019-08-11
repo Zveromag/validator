@@ -51,11 +51,27 @@
         <h2>Options</h2>
         <p>All options with defaults</p>
         <pre class="code"><code class="language-javascript">{
-  liveChange: true, // realtime validating fields
-  onError(errors) { //do something with errors object }
-  onSuccess(event) { event.preventDefault(); //do something }
-  onChange(field) { // field object }
-  onReset(event) { // reset form and removing errors}
+  // automatically display errors
+  showErrors: true,
+
+  // triggers to run validation
+  checkChange: true,
+  checkInput: false,
+  checkBlur: false,
+
+  // to automatically display errors
+  // showErrors must be enabled
+  containerSelector: '.form-group',
+  errorClass: 'has-error',
+  errorHintClass: 'error-hint',
+
+  // Validator Events
+  onSuccess(event) { event.preventDefault(); /* do something */ },
+  onError(errors) { /* do something with errors object */ },
+  onChange(field) { /* field object */ },
+  onReset(event) { /* reset form and removing errors */}
+
+  // Custom rules
   validators: {
     regex: {
       isHuman: {
@@ -82,7 +98,7 @@ Validate.run('.js-validate', options);</code></pre>
       </article>
 
 
-      <h2>Demos</h2>
+      <h2>Demo</h2>
 
       <form action="" class="js-validate" method="POST">
         <div class="form-group">
@@ -168,14 +184,8 @@ Validate.run('.js-validate', options);</code></pre>
 
   <script src="validator.js"></script>
   <script>
-
-    function getParentByClass(el, cls) {
-      while ((el = el.parentElement) && !el.classList.contains(cls));
-      return el;
-    }
-
     //  localization object
-    Validate.i18n = {
+    Validator.i18n = {
       required: 'Данное поле обязательно для заполнения',
       minLen: 'Минимально допустимое количество символов равно %s%',
       maxLen: 'Максимально допустимое количество символов равно %s%',
@@ -185,65 +195,20 @@ Validate.run('.js-validate', options);</code></pre>
       equalTo: 'Введенные данные не совпадают'
     }
 
-    Validate.run('.js-validate', {
+    Validator.run('.js-validate', {
+      errorHintClass: 'form-input-hint',
       onError: function (errors) {
-
+        console.log('%c Errors array ', 'background: red; color: #fff; font-weight: bold;');
         console.log(errors);
-        //  Show all errors in the form
-        errors.forEach(function (error) {
-          var field = error.el;
-          // var parent = field.closest('.form-group');
-          var parent = getParentByClass(field, 'form-group');
-          var notice = parent.querySelector('.form-input-hint');
-
-          if (notice) {
-            notice.parentNode.removeChild(notice)
-          }
-
-          parent.classList.add('has-error');
-          parent.insertAdjacentHTML('beforeend', '<div class="form-input-hint">' + error.errors.join('<br>') + '</div>')
-
-        });
-
-      },
-      onChange: function (field) {
-
-        // var parent = field.el.closest('.form-group');
-        var parent = getParentByClass(field.el, 'form-group');
-        var notice = parent.querySelector('.form-input-hint');
-
-        // if notice exist remove him
-        if (notice) {
-          notice.parentNode.removeChild(notice);
-        }
-
-        if (!field.errors) {
-          // if the field is validated, delete the class error from the parent wrapper
-          parent.classList.remove('has-error');
-
-        } else {
-          // or added error class and show notice
-          parent.classList.add('has-error');
-          parent.insertAdjacentHTML('beforeend', '<div class="form-input-hint">' + field.errors.join('<br>') + '</div>')
-        }
       },
       onSuccess: function (e) {
         // Send form
         e.preventDefault();
+        console.log('%c Validate success ', 'background: green; color: #fff; font-weight: bold;');
+        console.log(e.target);
         console.log(e.target.elements);
-        alert('success');
-      },
-      onReset: function (e) {
-        var form = e.target;
-        var fieldsWrap = [].slice.call(form.querySelectorAll('.has-error'));
-
-        fieldsWrap.forEach(function (item) {
-          item.classList.remove('has-error');
-
-          var hint = item.querySelector('.form-input-hint');
-          if (hint) item.removeChild(hint);
-        });
-
+        e.target.reset();
+        alert('Success. Go to console');
       },
       validators: {
         regex: {
