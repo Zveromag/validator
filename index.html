@@ -8,14 +8,14 @@
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css">
-  <title>Validate form</title>
+  <title>Validator form</title>
 </head>
 
 <body>
 
   <div class="hero">
     <div class="hero__inner">
-      <h1 class="hero__title">Validate form plugin</h1>
+      <h1 class="hero__title">Validator form plugin</h1>
       <span class="hero__desc">Simple plugin for form validation</span>
     </div>
     <a href="https://github.com/Zveromag/validator/" class="github">
@@ -32,7 +32,7 @@
         <p>This plugin validate form</p>
 
         <h2>Initialization</h2>
-        <pre class="code"><code class="language-javascript">Validate.run(selectors, options); // selectors - node|nodeList|string</code></pre>
+        <pre class="code"><code class="language-javascript">Validator.run(selectors, options); // selectors - node|nodeList|string</code></pre>
 
         <h2>Markup</h2>
         <p>One example of markup</p>
@@ -83,7 +83,7 @@
 }</code></pre>
         <h2>Simple localization</h2>
         <p>For example russian messages</p>
-        <pre class="code"><code class="language-javascript">Validate.i18n = {
+        <pre class="code"><code class="language-javascript">Validator.i18n = {
   required: 'Данное поле обязательно для заполнения',
   minLen: 'Минимально допустимое количество символов равно %s%',
   maxLen: 'Максимально допустимое количество символов равно %s%',
@@ -92,7 +92,7 @@
   equalTo: 'Введенные данные не совпадают'
 }
 
-Validate.run('.js-validate', options);</code></pre>
+Validator.run('.js-validate', options);</code></pre>
       <p>Custom messages using the data-attributes <code>data-valid-msg-{method_name}</code></p>
       <pre class="code"><code class="language-markup">&lt;input type=&quot;text&quot; data-valid=&quot;required|email&quot; data-valid-msg-email=&quot;Invalid email format&quot;/&gt;</code></pre>
       </article>
@@ -204,7 +204,7 @@ Validate.run('.js-validate', options);</code></pre>
       onSuccess: function (e) {
         // Send form
         e.preventDefault();
-        console.log('%c Validate success ', 'background: green; color: #fff; font-weight: bold;');
+        console.log('%c Validator success ', 'background: green; color: #fff; font-weight: bold;');
         console.log(e.target);
         console.log(e.target.elements);
         e.target.reset();
