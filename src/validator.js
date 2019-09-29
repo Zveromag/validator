@@ -32,7 +32,7 @@ const DEFAULTS = {
 };
 
 const RULES = new RegExp(
-  /^(minLen|maxLen|required|equalTo|email|regex|url)\((\w{1,20})\)/i
+  /^(minLen|maxLen|required|equalTo|email|regex|url)\((\w.{1,30})\)/i
 );
 
 export default class Validator {
@@ -75,6 +75,8 @@ export default class Validator {
 
     for (let j = 0; j < rulesLen; j++) {
       let rule = rules[j].match(RULES);
+      console.log(rule);
+
       let method;
 
       if (rule) {
@@ -85,6 +87,9 @@ export default class Validator {
       } else {
         method = rules[j];
       }
+
+      console.log(method);
+
 
       if (val === '' && method !== 'required' && method !== 'equalTo') continue;
 
