@@ -35,7 +35,7 @@ export default {
     return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(obj.el.value) || obj.i18n.email;
   },
   equalTo(obj, validate) {
-    const equalVal = validate.form.querySelector('[name=' + obj.param + ']');
+    const equalVal = validate.form.querySelector(`[name="${obj.param}"]`);
     if (!equalVal) return;
 
     const val = equalVal.value.trim();
