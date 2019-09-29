@@ -75,8 +75,6 @@ export default class Validator {
 
     for (let j = 0; j < rulesLen; j++) {
       let rule = rules[j].match(RULES);
-      console.log(rule);
-
       let method;
 
       if (rule) {
@@ -87,9 +85,6 @@ export default class Validator {
       } else {
         method = rules[j];
       }
-
-      console.log(method);
-
 
       if (val === '' && method !== 'required' && method !== 'equalTo') continue;
 
