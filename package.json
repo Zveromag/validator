@@ -1,8 +1,8 @@
 {
-  "name": "validator",
+  "name": "form-validation-plugin",
   "version": "0.0.1",
-  "description": "Simple form validation",
-  "main": "index.js",
+  "description": "Lightweight form validation plugin",
+  "main": "dist/validator.js",
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",

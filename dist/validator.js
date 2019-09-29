@@ -1,6 +1,6 @@
 /**
  * Form Validator - v0.0.1
- * Simple form validation
+ * Lightweight form validation plugin
  * https://github.com/Zveromag/validator#readme
  * Copyright (c) 2019 Ivan Kuzmichov,Ivan Tarakanov.
  * MIT License
