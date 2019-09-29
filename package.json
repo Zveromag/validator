@@ -1,6 +1,6 @@
 {
   "name": "form-validation-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightweight form validation plugin",
   "main": "dist/validator.js",
   "scripts": {
@@ -12,7 +12,13 @@
     "type": "git",
     "url": "git+https://github.com/Zveromag/validator.git"
   },
-  "keywords": ["form validator", "form validate", "validator", "validate", "validator plugin"],
+  "keywords": [
+    "form validator",
+    "form validate",
+    "validator",
+    "validate",
+    "validator plugin"
+  ],
   "authors": [
     {
       "name": "Ivan Kuzmichov",
