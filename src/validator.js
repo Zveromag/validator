@@ -127,7 +127,7 @@ export default class Validator {
     const errors = [];
     const fields = Array.prototype.slice.call(
       this.form.querySelectorAll(
-        '[data-valid]:not(:disabled):not([type="hidden"])'
+        '[data-valid]:not(:disabled)'
       )
     );
 
