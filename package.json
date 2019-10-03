@@ -1,6 +1,6 @@
 {
   "name": "form-validation-plugin",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Lightweight form validation plugin",
   "main": "dist/validator.js",
   "scripts": {

@@ -32,7 +32,7 @@ const DEFAULTS = {
 };
 
 const RULES = new RegExp(
-  /^(minLen|maxLen|required|equalTo|email|regex|url)\((\w.{1,30})\)/i
+  /^(minLen|maxLen|required|equalTo|email|regex|url)\((\w.*)\)/i
 );
 
 export default class Validator {

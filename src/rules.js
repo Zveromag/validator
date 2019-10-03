@@ -20,7 +20,13 @@ export default {
         isCheck = obj.el.value !== '';
         break;
 
-      default:  isCheck = obj.el.value.trim() !== '';
+      default:  {
+        if (obj.el.type === 'password') {
+          isCheck = obj.el.value !== '';
+        } else {
+          isCheck = obj.el.value.trim() !== '';
+        }
+      }
     }
 
     return isCheck || obj.i18n.required;
