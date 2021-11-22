@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css">
   <title>Validator form</title>
 </head>
@@ -196,6 +196,7 @@ Validator.run('.js-validate', options);</code></pre>
     }
 
     Validator.run('.js-validate', {
+      checkInput: true,
       errorHintClass: 'form-input-hint',
       onError: function (errors) {
         console.log('%c Errors array ', 'background: red; color: #fff; font-weight: bold;');
