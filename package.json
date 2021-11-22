@@ -1,6 +1,6 @@
 {
   "name": "form-validation-plugin",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Lightweight form validation plugin",
   "main": "dist/validator.js",
   "scripts": {
@@ -42,6 +42,7 @@
     "rollup": "^1.19.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-browsersync": "^1.0.0",
+    "rollup-plugin-copy-watch": "^0.0.1",
     "rollup-plugin-progress": "^1.1.1",
     "rollup-plugin-terser": "^5.1.1"
   }
