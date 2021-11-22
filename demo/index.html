@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css">
+  <title>Validator form</title>
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="hero__inner">
+      <h1 class="hero__title">Validator form plugin</h1>
+      <span class="hero__desc">Simple plugin for form validation</span>
+    </div>
+    <a href="https://github.com/Zveromag/validator/" class="github">
+      <svg aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+  </div>
+
+  <div class="wrap">
+
+    <div class="container">
+
+      <article>
+        <h2>Description</h2>
+        <p>This plugin validate form</p>
+
+        <h2>Initialization</h2>
+        <pre class="code"><code class="language-javascript">Validator.run(selectors, options); // selectors - node|nodeList|string</code></pre>
+
+        <h2>Markup</h2>
+        <p>One example of markup</p>
+        <pre class="code"><code class="language-markup">&lt;form action=&quot;&quot; class=&quot;js-validate&quot; method=&quot;POST&quot;&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;name&quot;&gt;Name&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; placeholder=&quot;Name&quot; data-valid=&quot;required|minLen(2)&quot;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;e-mail&quot;&gt;Email&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;e-mail&quot; name=&quot;e-mail&quot; placeholder=&quot;E-mail&quot; data-valid=&quot;required|email&quot;/&gt;
+  &lt;/div&gt;
+  &lt;button&gt;Send&lt;button/&gt;
+&lt;/form&gt;</code></pre>
+
+        <h2>Options</h2>
+        <p>All options with defaults</p>
+        <pre class="code"><code class="language-javascript">{
+  // automatically display errors
+  showErrors: true,
+
+  // triggers to run validation
+  checkChange: true,
+  checkInput: false,
+  checkBlur: false,
+
+  // to automatically display errors
+  // showErrors must be enabled
+  containerSelector: '.form-group',
+  errorClass: 'has-error',
+  errorHintClass: 'error-hint',
+
+  // Validator Events
+  onSuccess(event) { event.preventDefault(); /* do something */ },
+  onError(errors) { /* do something with errors object */ },
+  onChange(field) { /* field object */ },
+  onReset(event) { /* reset form and removing errors */}
+
+  // Custom rules
+  validators: {
+    regex: {
+      isHuman: {
+        pattern: /^human$/i, // check `word` in the field
+        error: 'You must type the word human' // error message
+      }
+    }
+  }
+}</code></pre>
+        <h2>Simple localization</h2>
+        <p>For example russian messages</p>
+        <pre class="code"><code class="language-javascript">Validator.i18n = {
+  required: 'Данное поле обязательно для заполнения',
+  minLen: 'Минимально допустимое количество символов равно %s%',
+  maxLen: 'Максимально допустимое количество символов равно %s%',
+  email: 'Поле e-mail имеет неверный формат',
+  number: 'Введенные данные должны быть числом',
+  equalTo: 'Введенные данные не совпадают'
+}
+
+Validator.run('.js-validate', options);</code></pre>
+      <p>Custom messages using the data-attributes <code>data-valid-msg-{method_name}</code></p>
+      <pre class="code"><code class="language-markup">&lt;input type=&quot;text&quot; data-valid=&quot;required|email&quot; data-valid-msg-email=&quot;Invalid email format&quot;/&gt;</code></pre>
+      </article>
+
+
+      <h2>Demo</h2>
+
+      <form action="" class="js-validate" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="name">Name</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="Name" data-valid="required|maxLen(10)">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="e-mail">E-mail</label>
+          <input class="form-input" type="text" id="e-mail" name="e-mail" placeholder="E-mail" data-valid="required|email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="url">url</label>
+          <input class="form-input" type="text" id="url" name="url" placeholder="Url" data-valid="url"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-input" type="password" id="password" name="password" placeholder="password" data-valid="required" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="more-password">Repeat password</label>
+          <input class="form-input" type="password" id="more-password" name="more-password" placeholder="more-password" data-valid="equalTo(password)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="select">Select</label>
+          <select class="form-select" name="" id="select" data-valid="required">
+            <option value="" selected>Select number</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">finish him</button>
+          <button type="reset" class="btn">reset</button>
+        </div>
+      </form>
+
+      <div class="divider"></div>
+
+      <form action="" class="js-validate" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="custom"></label>
+          <input type="text" class="form-input" placeholder="Type human" data-valid="required|regex(human)">
+        </div>
+        <div class="form-group">
+          <div>Gender</div>
+          <label class="form-radio">
+            <input type="radio" name="gender" data-valid="required">
+            <i class="form-icon"></i> Male
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="gender" data-valid="required">
+            <i class="form-icon"></i> Female
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Source</label>
+          <select class="form-select" multiple="" data-valid="required">
+            <option value="slack">Slack</option>
+            <option value="skype">Skype</option>
+            <option value="hipchat">Hipchat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-checkbox" for="apply">
+            <input type="checkbox" id="apply" data-valid="required">
+            <i class="form-icon"></i> Apply
+          </label>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">finish him</button>
+          <button type="reset" class="btn">reset</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="footer">
+      <div class="text-center">Made with <svg class="icon" width="14" height="14" fill="#fff" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+  c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />
+      </svg></div>
+    </div>
+  </div>
+
+  <script src="validator.js"></script>
+  <script>
+    //  localization object
+    Validator.i18n = {
+      required: 'Данное поле обязательно для заполнения',
+      minLen: 'Минимально допустимое количество символов равно %s%',
+      maxLen: 'Максимально допустимое количество символов равно %s%',
+      email: 'Поле e-mail имеет неверный формат',
+      phone: 'Телефонный номер имеет неверный формат',
+      number: 'Введенные данные должны быть числом',
+      equalTo: 'Введенные данные не совпадают'
+    }
+
+    Validator.run('.js-validate', {
+      checkInput: true,
+      errorHintClass: 'form-input-hint',
+      onError: function (errors) {
+        console.log('%c Errors array ', 'background: red; color: #fff; font-weight: bold;');
+        console.log(errors);
+      },
+      onSuccess: function (e) {
+        // Send form
+        e.preventDefault();
+        console.log('%c Validator success ', 'background: green; color: #fff; font-weight: bold;');
+        console.log(e.target);
+        console.log(e.target.elements);
+        e.target.reset();
+        alert('Success. Go to console');
+      },
+      validators: {
+        regex: {
+          human: {
+            pattern: /^human$/i,
+            error: 'Необходимо набрать слово human'
+          }
+        }
+      }
+    });
+
+
+// Page effects
+  var hero = document.querySelector('.hero');
+  var heroTitle = hero.querySelector('.hero__inner');
+  function heroFade() {
+    var scrollTop  = window.scrollY || window.pageYOffset;
+    var heroHeight = hero.offsetHeight;
+    var alpha = 1 - (scrollTop / heroHeight);
+    var rotate = Math.round((scrollTop / heroHeight) * 100) % 360;
+
+    if (alpha < 0) alpha = 0;
+
+    heroTitle.style.opacity = alpha;
+    heroTitle.style.transform = 'perspective(700px) rotate3d(1, 0, 0, '+rotate+'deg)';
+  }
+
+  window.addEventListener('scroll', function() {
+    requestAnimationFrame(heroFade);
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+</body>
+
+</html>

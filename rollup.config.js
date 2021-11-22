@@ -2,6 +2,7 @@ import babel from 'rollup-plugin-babel';
 import browsersync from 'rollup-plugin-browsersync'
 import progress from 'rollup-plugin-progress';
 import { terser } from 'rollup-plugin-terser';
+import copy from 'rollup-plugin-copy-watch';
 import { version, description, homepage, authors, license } from './package.json'
 
 const OUTPUT = 'dist'
@@ -16,6 +17,13 @@ const banner = `/**
  * ${license} License
  */`;
 
+ const copyOptions = {
+  targets: [{ src: 'demo/*', dest: 'dist', copyOnce: false }]
+ }
+ if (!production) {
+  copyOptions.watch = 'demo';
+ }
+
 export default {
   input: './src/validator.js',
   output: {
@@ -29,9 +37,12 @@ export default {
     babel({
       exclude: 'node_modules/**'
     }),
+    copy(copyOptions),
     !production &&
       browsersync({
         open: true,
+        watchEvents: ['add', 'change', 'unlink'],
+        files: ['demo/index.html', 'demo/styles.css'],
         server: 'dist'
       }),
     production &&
