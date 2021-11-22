@@ -224,13 +224,14 @@ export default class Validator {
 
   unbindEvents() {
     this.form.removeEventListener('submit', this.formSubmit);
+    this.form.removeEventListener('reset', this.formReset);
 
     if (this.options.checkChange) {
       this.form.removeEventListener('change', this.inputChange);
     }
 
     if (this.options.checkInput) {
-      this.form.addEventListener('input', this.inputChange);
+      this.form.removeEventListener('input', this.inputChange);
     }
 
     if (this.options.checkBlur) {
