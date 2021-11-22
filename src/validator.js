@@ -12,8 +12,6 @@ const MESSAGES = {
   url: 'It is not a valid url'
 };
 
-const VERSION = 0.1;
-
 const DEFAULTS = {
   showErrors: true,
 
@@ -54,10 +52,6 @@ export default class Validator {
     this.inputChange = this.validateInput.bind(this);
 
     this.bindEvents();
-  }
-
-  static get version() {
-    return VERSION;
   }
 
   check(el) {
