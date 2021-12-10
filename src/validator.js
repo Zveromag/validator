@@ -84,9 +84,9 @@ export default class Validator {
 
       if (Rules.hasOwnProperty(method)) {
         let state = Rules[method](tmp, this);
-
-        if (state !== undefined && state !== true) {
-          const dataMsg = el.getAttribute(`data-valid-msg-${method}`);
+        if (state !== true) {
+          const dataset = (method === 'regex' && tmp.param) ? `data-valid-msg-regex-${tmp.param}` : `data-valid-msg-${method}`;
+          const dataMsg = el.getAttribute(dataset);
 
           state = !dataMsg ? state : dataMsg;
           errors.push(state);
